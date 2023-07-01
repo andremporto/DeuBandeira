@@ -10,6 +10,8 @@ import SwiftUI
 struct ContentView: View {
     @State private var showingScore = false
     @State private var scoreTitle = ""
+    @State private var userScore = 0
+    @State private var questionCounter = 1
     
     @State private var countries = ["Estônia", "França", "Alemanha", "Irlanda", "Itália", "Nigéria", "Mônaco", "Polônia", "Rússia", "Espanha", "Inglaterra", "EUA"].shuffled()
     
@@ -36,7 +38,7 @@ struct ContentView: View {
                             .font(.subheadline.weight(.heavy))
                         
                         Text(countries[correctAnswer])
-//                            .foregroundColor(.white)
+                        //                            .foregroundColor(.white)
                             .font(.largeTitle.weight(.semibold))
                     }
                     
@@ -52,14 +54,14 @@ struct ContentView: View {
                     }
                 }
                 .frame(maxWidth: .infinity)
-                .padding(.vertical, 20)
+                .padding(.vertical, 30)
                 .background(.thinMaterial)
                 .clipShape(RoundedRectangle(cornerRadius: 20))
                 
                 Spacer()
                 Spacer()
                 
-                Text("Pontuação ???")
+                Text("Pontuação \(userScore)")
                     .foregroundColor(.white)
                     .font(.title.bold())
                 
@@ -70,17 +72,27 @@ struct ContentView: View {
         }
         
         .alert(scoreTitle, isPresented: $showingScore) {
-            Button("Continuar", action: askQuestion)
+            if questionCounter != 8 {
+                Button("Continue", action: askQuestion)
+            } else {
+                Button("Início", action: restartGame)
+            }
         } message: {
-            Text("Sua pontuação é ???")
+            if questionCounter != 8 {
+                Text("Sua Pontuação é \(userScore)")
+            } else {
+                Text("Você terminou o jogo com \(userScore) pontos. Pressione Início para reiniciar o jogo.")
+            }
         }
     }
     
     func flagTapped(_ number: Int) {
         if number == correctAnswer {
-            scoreTitle = "Correto"
+            scoreTitle = "😃 Coreto! Essa é a bandeira do(a) \(countries[number])"
+            userScore+=100
         } else {
-            scoreTitle = "Errado"
+            scoreTitle = "🥲 Errado! Essa é a bandeira do(a) \(countries[number])."
+            userScore-=100
         }
         
         showingScore = true
@@ -89,6 +101,14 @@ struct ContentView: View {
     func askQuestion() {
         countries.shuffle()
         correctAnswer = Int.random(in: 0...2)
+        questionCounter+=1
+    }
+    
+    func restartGame() {
+        countries.shuffle()
+        correctAnswer = Int.random(in: 0...2)
+        questionCounter = 1
+        userScore = 0
     }
     
 }
