@@ -27,4 +27,4 @@ My first correct/incorrect game in SwiftUI with a beautiful interface and easy u
 
 ![DeuBandeira Banner](./DeuBandeira/Documentation/DeuBandeiraApp.png)
 
-> This is a project made from The 100DaysOfSwiftUI, check my portfolio at [andreporto.vercel.app](https://andreporto.vercel.app)
+> This is a project made from The [100DaysOfSwiftUI](https://www.hackingwithswift.com/100/swiftui), check my portfolio at [andreporto.vercel.app](https://andreporto.vercel.app)
